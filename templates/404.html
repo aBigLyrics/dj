@@ -1,0 +1,11 @@
+{% extends 'dj_logs/base.html' %}
+{% load bootstrap3 %}
+
+{% block header %}
+
+    <strong><h1>你没有足够的权限</h1></strong>
+{% endblock %}
+
+{% block content %}
+    <a href="javascript:history.go(-1)" class="btn btn-primary">返回</a>
+{% endblock %}

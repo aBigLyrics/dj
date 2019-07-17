@@ -1,0 +1,29 @@
+{% extends 'dj_logs/base.html' %}
+{% load bootstrap3 %}
+{% block header %}
+    <h1 style="text-align: center">主题</h1>
+    <div style="text-align: center">
+    <form method="get" action={% url 'dj_logs:search' %}>
+    {% csrf_token %}
+    <input type="search"  name ='name' placeholder="搜索" required>
+    <button type="submit" >搜索</button>
+    </form>
+    </div>
+{% endblock %}
+
+{% block content%}
+
+    <ul >
+    {% for topic in topics %}
+        <li style="list-style: none">
+            <h1>
+                <strong ><a href="{% url 'dj_logs:topic' topic.id %}">{{ topic }}</a></strong><button style="margin-left: 10px" id="dc" class="btn fieldBox" onclick="window.location.href = '{% url 'dj_logs:delete_topic' topic.id%}'">删除</button>
+            </h1>
+        </li>
+        {% empty %}
+            <li>没有任何主题存在</li>
+    {% endfor %}
+    </ul>
+    <h3 style="padding-top: 50px"><button onclick="window.location.href ='{% url 'dj_logs:new_topic' %}'" class="btn btn-primary">添加主题</button></h3>
+
+{% endblock %}

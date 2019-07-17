@@ -1,0 +1,16 @@
+{% extends 'dj_logs/base.html' %}
+
+{% block header %}
+<span style="font-size: x-large;font-style:normal">关键字：</span>{{ search }}
+{% endblock %}
+
+{% block content %}
+{% for topic in topics %}
+    <a href={% url 'dj_logs:topic' topic.id %}>{{ topic }}</a>
+    {% empty %}
+    <strong >没有关于{{ search }}的主题</strong>
+    <p style="padding-top: 50px"><button onclick="window.location.href ='{% url 'dj_logs:topics' %}'" class="btn btn-primary">返回</button></p>
+
+{% endfor %}
+
+{% endblock %}

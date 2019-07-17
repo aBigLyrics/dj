@@ -1,0 +1,40 @@
+{% extends 'dj_logs/base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block header %}
+    <h1>Baidu-aip 应用</h1>
+    <script type="text/javascript">
+    {#function f() {#}
+    {#    var div =getElementById('df').style.display='unset'#}
+    {}#}
+    </script>
+{% endblock %}
+
+{% block content %}
+
+    <form action="{% url 'dj_logs:face' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="img">
+        <button type="submit" >打分</button>
+    </form>
+    <div style="float: left;height: 200px;width: 200px">
+
+
+        <div style="float: left;" id="df" >
+            <img  src="{% static 'img/df' %}/{{ image }}" alt="" height="250" width="250" >
+            <ul>
+                {% for re in res %}
+                <li>{{ re }}</li>
+                {% endfor %}
+{#            #}
+{#        <li>年龄:{{ age }}</li>#}
+{#        <li>分值:{{ beauty }}</li>#}
+{#        <li>性别:{{ sex }}</li>#}
+            </ul>
+        </div>
+
+
+    </div>
+
+{% endblock %}

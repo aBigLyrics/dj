@@ -1,0 +1,15 @@
+{% extends 'dj_logs/base.html' %}
+{% load bootstrap3 %}
+{% block header %}
+    <h1>{{ topic }}</h1>
+{% endblock %}
+{% block content %}
+
+    <form action="{% url 'dj_logs:new_entry' topic.id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button name="submit" class="btn btn-primary">添加</button>
+        <a href="javascript:history.go(-1)" class="btn btn-primary">返回</a>
+    </form>
+
+{% endblock %}

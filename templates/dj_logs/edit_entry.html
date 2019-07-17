@@ -1,0 +1,18 @@
+{% extends 'dj_logs/base.html' %}
+{% load bootstrap3 %}
+{% block header %}
+    <h1>{{ topic }}</h1>
+{% endblock %}
+{% block content %}
+
+
+
+    <p>编辑笔记：</p>
+
+    <form action="{% url 'dj_logs:edit_entry' entry.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button name="submit" class="btn btn-primary">保存</button><button style="margin-left: 10px" onclick="window.location.href ='{% url 'dj_logs:topic' topic.id %}'" class="btn btn-primary">返回</button>
+    </form>
+
+{% endblock %}

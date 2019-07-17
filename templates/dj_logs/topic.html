@@ -1,0 +1,52 @@
+{% extends 'dj_logs/base.html' %}
+{% load bootstrap3 %}
+
+{% block header %}
+    <strong><h1>{{ topic }}</h1></strong>
+{#    <script src="jquery-3.4.1.min.js"></script>#}
+    <script type="text/javascript">
+    function translation(entry_id,entry_text){
+        $.ajax({
+            url: '{% url 'dj_logs:translation' %}',
+            type: 'get',
+            data: {
+                text: entry_text,
+            },
+            success: function (data) {
+                {#var div =$('#q'+entry_id)#}
+                {#div.show().html(data['res'])#}
+              $("#q"+entry_id).show().html(data['res']);
+            }
+        });
+    }
+    </script>
+{% endblock %}
+{% block content %}
+    <strong>备注：</strong>
+    <div class="panel" style="font-style:italic">{{ topic.text }}</div>
+        <p style="padding-top: 0px">
+        <a href="{% url 'dj_logs:new_entry' topic.id %}" class="btn btn-primary">添加笔记</a><button style="margin-left: 10px" onclick="window.location.href ='{% url 'dj_logs:topics' %}'" class="btn btn-primary">返回</button>
+    </p>
+    {% for entry in entries %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3>
+                    {{ entry.date_added|date:'M d,Y H:i' }}
+                    <small>
+                        <a style="margin-left: 30px" href="{% url 'dj_logs:edit_entry' entry.id %} ">编辑</a>
+                        <a  style="margin-left: 10px" href={% url 'dj_logs:delete_entry' entry.id %}>删除</a>
+                        <button type="button" onclick="translation({{ entry.id }},'{{ entry.text }}')">翻译</button>
+                    </small>
+                </h3>
+            </div>
+            <div class="panel-body" >
+                {{ entry.text|linebreaks }}
+            </div>
+            <div class="panel-body" id="q{{ entry.id }}" >
+            </div>
+        </div>
+        {% empty %}
+        <strong>没有任何笔记</strong>
+    {% endfor %}
+    <div style="padding-block-end: 20px"></div>
+{% endblock %}

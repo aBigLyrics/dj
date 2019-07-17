@@ -1,0 +1,81 @@
+{% extends 'dj_logs/base.html' %}
+{% load bootstrap3 %}
+{% load static %}
+
+{% block header %}
+    <style>
+    .word_ix{
+        float: left;
+    }
+    .word_px{
+        {#display: inline-block;#}
+        float: left;
+
+    }
+    </style>
+    <h1>辅助英语的地方</h1>
+    <script type="text/javascript">
+        function translation(){
+            var text = $('#p').val()
+            var lc = $('#lc option:selected').val()
+            $.ajax({
+                url: '{% url 'dj_logs:trans_aip' %}',
+                type: 'get',
+                data: {
+                    text:text,
+                    lc:lc,
+                },
+                success: function (data) {
+                    var div = $('#show')
+                    div.show().html(data['res'])
+                  {#  var div =$('#q'+entry_id)#}
+                  {#  div.show().html(data['res'])#}
+                  {#$("#q").show().html(data['res']);#}
+                }
+            });
+         }
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div style="float: left" class="word_ix">
+    <div style="height: 250px;width: 500px;"class="word_ix">
+    <textarea type="text" name="trans_text" id="p" style="height: 100px;width: 300px"></textarea>
+        <select name="" id="lc">
+            <option value="auto,auto" >自动检测语言</option>
+            <option value="zh-CHS,ja">中-日</option>
+            <option value="zh-CHS,ko">中-韩</option>
+            <option value="zh-CHS,fr">中-法</option>
+            <option value="zh-CHS,ru">中-俄</option>
+            <option value="zh-CHS,de">中-德</option>
+            <option value="zh-CHS,es">中-西班牙</option>
+            <option value="zh-CHS,pt">中-葡萄牙</option>
+            <option value="zh-CHS,vi">中-越南</option>
+            <option value="zh-CHS,id">中-印尼</option>
+            <option value="zh-CHS,ar">中-阿拉伯</option>
+        </select>
+        <button type="button" onclick="translation()">翻译</button>
+    </div>
+    <div style="width: 500px;height: 250px;font-size: large"class="word_ix" id="show">
+    </div>
+    </div>
+
+    <div >
+        <form action="{% url 'dj_logs:trans_aip' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="img">
+        <button type="submit" >图片翻译</button>
+    </form>
+    </div>
+        <div class="word_px" style=";margin-right: 20px;padding-top: 20px">
+            <img src="{% static 'img/trans'%}/{{ image }}" alt="" height="250px" width="250px">
+        </div>
+        <div class="word_px" style=";padding-top: 20px;padding-bottom: 100px;white-space: normal;word-wrap: break-word;width: 70%">
+            {% for tran in trans %}
+                <ul>{% for tra in tran %}
+                    <li style="list-style: none">{{ tra }}</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </div>
+{% endblock %}

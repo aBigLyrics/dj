@@ -1,0 +1,11 @@
+{% extends 'dj_logs/base.html' %}
+{% load bootstrap3 %}
+
+{% block header %}
+<h1>一些有趣的库的使用</h1>
+{% endblock %}
+
+{% block content %}
+
+    <a href="{% url 'dj_logs:face' %}">人脸打分</a>
+{% endblock %}
