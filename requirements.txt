@@ -2,5 +2,5 @@ baidu_aip==2.2.13.0
 requests==2.22.0
 Django==2.2
 PyMySQL==0.9.3
-Pillow==6.0.0
+Pillow==8.1.1
 beautifulsoup4==4.7.1
